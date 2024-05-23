@@ -22,51 +22,83 @@
 // 1. Obtener datos de la API:
 
 
+let cargarApi = false; // Creamos la variable para resetear la API si ya se hubiese cargado
+
 function infoApi() {
     const info = document.getElementById("contenido-info"); // gestion DOM
 
-    info.innerHTML = " Cargando API... por favor tenga paciencia gracias ";// gestion DOM-creamos elemento
+    if (!cargarApi) {// Aqui le decimo que si !false, osea si es true, haz toda la logica de dentro
 
-    // setTimeout(() => {
-    info.innerHTML = ""; // gestion DOM - reasignamos valos 'nada' para que el mensaje desaparezca
-    fetch("https://jsonplaceholder.typicode.com/users/1/posts")
-        .then((respuesta) => { //Promesas
-            if (!respuesta.ok) {
-                throw new Error(
-                    "Error al cargar la API" + respuesta.statusText
-                );
-            }
-            return respuesta.json();
-        })
-        .then((data) => {
-            console.log(data);
-            info.innerHtml = ""; // para vaciar el contenido previo
-            if (data) {
-                data.forEach(element => {
-                    pintarElemento(element, info, true);
-
-                });
-            }
-            else {
-                info.innerHTML = "La info de la API no esta disponible";
-            }
+        //Estilo al contenedor de la API desde JS
+        info.style.border = '5px solid #0b5ed7'
+        info.style.borderRadius = '5px'
+        info.style.padding = '20px'
+        // info.style.maxHeight = '650px'
+        info.style.overflow = 'scroll'
+        // info.style.justifyContent = 'center'
 
 
-        })
+        info.innerHTML = ""; // gestion DOM - reasignamos valos 'nada' para que el mensaje desaparezca
 
-        .catch((error) => {
-            console.error("Error de carganda de la API", error);
-            info.innerHTML =
-                "Error, disculpe las molestias, intentelo de nuevo mas tarde";
-        });
-    // }, 2000);
+        fetch("https://jsonplaceholder.typicode.com/users/1/posts")
+            .then((respuesta) => { //Promesas
+                if (!respuesta.ok) { //Si la respuesta no es correcta lanza un error
+                    throw new Error(
+                        "Error al cargar la API" + respuesta.statusText
+                    );
+                }
+                return respuesta.json();// Si la respuesta es correcta convierte los datos a JSON
+            })
+            .then((data) => {
+                console.log(data);
+                info.innerHtml = ""; // para vaciar el contenido previo
+                if (data) {
+                    data.forEach(element => {
+
+                        pintarElemento(element, info, true); // Utilizamos funcion para 'pintar' los elementos en el DOM
+
+                    });
+                }
+                else { // Si pintarElementos() fallara, saldria este error.
+                    info.innerHTML = "La info de la API no esta disponible";
+                }
+
+                // Una vez la este todo 'pintado y haya ido bien, pasamos caragarApi a true, para que mas adelante cuando la api este 'pintada' que haga la parte siguiente de la logica.
+                cargarApi = true;
+
+            })
+
+            .catch((error) => {
+                console.error("Error de carganda de la API", error);
+                info.innerHTML =
+                    "Error, disculpe las molestias, intentelo de nuevo mas tarde";
+            });
+
+
+    } else { // hace que el resultado alterne entre mostrar(true) o ocultar(false)
+
+        if (info.style.display === 'none' || info.innerHTML === '') {
+            info.style.display = 'grid';
+        } else {// si cargarApi = true, le quitamos el display haciendo que desaparezca.
+            info.style.display = 'none';
+        }
+
+    }
+
 }
 
 function randomPhoto() {
     const photo = document.getElementById("contenido-photo"); // gestion DOM
     photo.innerHTML = "<span> </span>";// gestion DOM
 
-    fetch("https://picsum.photos/200/300")
+    //Estilo a la imagen desde JS
+
+
+    photo.style.padding = '20px'
+    photo.style.justifyContent = 'center'
+    photo.style.marginTop = '20px'
+
+    fetch("https://picsum.photos/200")
         .then((respuesta) => {//Promesas
             if (respuesta.ok) {
                 const img = document.createElement("img");// gestion DOM
@@ -89,6 +121,9 @@ function randomInfo() {
 
     const random = document.querySelector('#contenido-random')
 
+    random.style.padding = '20px'
+    random.style.justifyContent = 'center'
+    random.style.marginTop = '20px'
     random.innerHTML = '';
 
 
@@ -120,7 +155,8 @@ function getRandomInt(max) {
 
 
 
-function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) {
+function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos, section) {
+
     if (mostrarTodosLosAtributos) {
         const userElement = document.createElement("h2");
         const userid = elemento.userId;
@@ -144,4 +180,9 @@ function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) 
         descripcion.innerHTML = 'body: ' + body;
         contenedorElemento.appendChild(descripcion);
     }
+
+    if (section) {
+
+    }
+
 }

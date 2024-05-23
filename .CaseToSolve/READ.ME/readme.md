@@ -49,6 +49,8 @@ I have used JavaScript:
 
 ### Sources:
 
-[Random API url](https://jsonplaceholder.typicode.com/users/1/posts): https://jsonplaceholder.typicode.com/users/1/posts
+[Random API url](https://jsonplaceholder.typicode.com/users/1/posts) : https://jsonplaceholder.typicode.com/users/1/posts
 
 [Random photo API url](https://picsum.photos/200/300) : https://picsum.photos/200/300
+
+[Icons](https://iconos8.es/icons/set/list) : https://iconos8.es/icons/set/list
