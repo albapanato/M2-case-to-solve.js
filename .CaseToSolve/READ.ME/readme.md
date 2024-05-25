@@ -1,51 +1,36 @@
-<style>
-    span {color:yellow;
-    }
-    img{
-        width:22px;
-        
-    }
-
-</style>
-
 # Module 2: Case to solve
 
 ### Project description:
 
-This is a brief explanation of my JavaScript module final project were I used all the knowledge gained over the past weeks. Bellow you could see the different parts of it.
+This is a brief explanation of my "MODULE 2: JavaScript" final project were try to show all the knowledge gained over the past weeks and some I learn while making this actual project. I have used javaScript:
 
-#### Index.html
+- To create logic to achieve the objectives bellow:
 
-I have made a basic html structure, which contains:
+  - A <button>Random photo API</button> who shown random pictures from a external source.
+    ` <button onclick="randomPhoto()">`
 
-- With a `<header>` element compose of several `<button>` elements which will be helping to make you see the diferent info from the APIs.
+  - A <button>Full API data</button> who shows API full data.
+    `<button onclick="infoApi()">`
 
-- Also a `<main>` element compose with `<div>` container where all the info from the API would be apearing on your screen.
+  - A <button>Random data API</button> who shows a random id and title from the API.
+    `<button onclick="randomInfo()">`
 
-... Seguir agregando info
+  - A <select><option >userId</option><option >id</option><option >title</option><option >body</option></select> with an event, which will show just the data from a specific attribute chosen.
+    `onchange="seleccion(event)"`
 
-#### Page style
+- To refactor my own code;
+  When I started to add lines to my script and create different functions to be able to show data from the API, I have noticed I was about to make the third call to the API inside a function, hence I made a thought on how it could be minimized. So I learn the method [windows.onload=()=>{}](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) which made possible to run the function callingApi() as the page loads. The function `callingApi()`, makes the call to the API and the value is given into an empty array named `data`. This makes it more functional to use in the rest of the function such as:
 
-I wanted to implement both ways I have learn so far.
+  - `async function infoApi()`
+  - `function randomInfo()`
+  - `function selector()`
+  - `function seleccion(event)`
 
-- ![icon bootstrap](bootstrap.png) <u>Bootstrap</u>
-
-- ![icon css](css-lg.png) <u>Cascading Style Sheets</u>
-
-#### Dynamic control of an API
-
-I have used JavaScript:
-
-- To get info from different APIs.
-
-- To give functionality to the buttons,to be able to show the objectives bellow:
-
-  - A button who shown random pictures from a external source.
-  - A button who shows the full info from the API.
-
-    <span>Posibles cambios en este enunciado:</span>
-
-    - A button who shows random info.
+- DOM management
+  - create elements
+  - point at elements
+  - give style to elements (even if it may be better option to do with CSS)
+  - create new style to elements (even if it may be better option to do with CSS)
 
 ### Sources:
 
