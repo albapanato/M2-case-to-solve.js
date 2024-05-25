@@ -18,73 +18,69 @@
  *  */
 
 
+let data = []
+const obtenerInfo = () => {
+    fetch("https://jsonplaceholder.typicode.com/users/1/posts")
+        .then((respuesta) => {
+            if (!respuesta.ok) {
+                throw new Error(
+                    "Error al cargar la API" + respuesta.statusText
+                );
+            }
+            return respuesta.json();
+        })
+        .then((info) => {
+            if (!info || info.length === 0) {
+                // mostrar mensaje de que la llamada a la api ha ido bien pero no hay datos
+            }
+            data = info
+        }).catch((error) => {
+            console.error("Error de carganda de la API", error);
+            info.innerHTML =
+                "Error, disculpe las molestias, intentelo de nuevo mas tarde";
+        });
+}
+
+window.onload = () => {
+    obtenerInfo()
+}
 
 // 1. Obtener datos de la API:
 
 
-let cargarApi = false; // Creamos la variable para resetear la API si ya se hubiese cargado
+function mostrarDadta() {
+    console.log(data)
+}
 
-function infoApi() {
+
+async function infoApi() {
     const info = document.getElementById("contenido-info"); // gestion DOM
 
-    if (!cargarApi) {// Aqui le decimo que si !false, osea si es true, haz toda la logica de dentro
+    //Estilo al contenedor de la API desde JS
+    info.style.border = '5px solid #0b5ed7'
+    info.style.borderRadius = '5px'
+    info.style.padding = '20px'
+    info.style.maxHeight = '450px'
 
-        //Estilo al contenedor de la API desde JS
-        info.style.border = '5px solid #0b5ed7'
-        info.style.borderRadius = '5px'
-        info.style.padding = '20px'
-        // info.style.maxHeight = '650px'
-        info.style.overflow = 'scroll'
-        // info.style.justifyContent = 'center'
+    info.style.overflow = 'scroll'
 
+    info.innerHtml = ""; // para vaciar el contenido previo
+    data.forEach(element => {
 
-        info.innerHTML = ""; // gestion DOM - reasignamos valos 'nada' para que el mensaje desaparezca
+        pintarElemento(element, info, true); // Utilizamos funcion para 'pintar' los elementos en el DOM
 
-        fetch("https://jsonplaceholder.typicode.com/users/1/posts")
-            .then((respuesta) => { //Promesas
-                if (!respuesta.ok) { //Si la respuesta no es correcta lanza un error
-                    throw new Error(
-                        "Error al cargar la API" + respuesta.statusText
-                    );
-                }
-                return respuesta.json();// Si la respuesta es correcta convierte los datos a JSON
-            })
-            .then((data) => {
-                console.log(data);
-                info.innerHtml = ""; // para vaciar el contenido previo
-                if (data) {
-                    data.forEach(element => {
+    });
 
-                        pintarElemento(element, info, true); // Utilizamos funcion para 'pintar' los elementos en el DOM
-
-                    });
-                }
-                else { // Si pintarElementos() fallara, saldria este error.
-                    info.innerHTML = "La info de la API no esta disponible";
-                }
-
-                // Una vez la este todo 'pintado y haya ido bien, pasamos caragarApi a true, para que mas adelante cuando la api este 'pintada' que haga la parte siguiente de la logica.
-                cargarApi = true;
-
-            })
-
-            .catch((error) => {
-                console.error("Error de carganda de la API", error);
-                info.innerHTML =
-                    "Error, disculpe las molestias, intentelo de nuevo mas tarde";
-            });
+    console.log('computed', window.getComputedStyle(info))
+    console.log('computstyleed', info.style)
 
 
-    } else { // hace que el resultado alterne entre mostrar(true) o ocultar(false)
-
-        if (info.style.display === 'none' || info.innerHTML === '') {
-            info.style.display = 'grid';
-        } else {// si cargarApi = true, le quitamos el display haciendo que desaparezca.
-            info.style.display = 'none';
-        }
-
+    if (!info.style.display || info.style.display === 'none' || info.innerHTML === '') {
+        info.style.display = 'block';
+    } else {
+        console.log('entra')
+        info.style.display = 'none';
     }
-
 }
 
 function randomPhoto() {
@@ -96,9 +92,9 @@ function randomPhoto() {
 
     photo.style.padding = '20px'
     photo.style.justifyContent = 'center'
-    photo.style.marginTop = '20px'
+    // photo.style.marginTop = '20px'
 
-    fetch("https://picsum.photos/200")
+    fetch("https://picsum.photos/300")
         .then((respuesta) => {//Promesas
             if (respuesta.ok) {
                 const img = document.createElement("img");// gestion DOM
@@ -120,29 +116,14 @@ function randomPhoto() {
 function randomInfo() {
 
     const random = document.querySelector('#contenido-random')
-
-    random.style.padding = '20px'
-    random.style.justifyContent = 'center'
-    random.style.marginTop = '20px'
+    random.style.textAlign = 'center'
+    random.style.width = '300px'
     random.innerHTML = '';
 
-
-    fetch("https://jsonplaceholder.typicode.com/users/1/posts")
-        .then((respuesta) => { //Promesas
-            if (!respuesta.ok) {
-                throw new Error(
-                    "Error al cargar la API" + respuesta.statusText
-                );
-            }
-            return respuesta.json();
-        })
-        .then((arrayElementos) => {
-            const lengthArray = arrayElementos.length
-            const numRandom = getRandomInt(lengthArray)
-            pintarElemento(arrayElementos[numRandom], random)
-        })
+    const lengthArray = data.length
+    const numRandom = getRandomInt(lengthArray)
+    pintarElemento(data[numRandom], random)
 }
-
 
 
 
@@ -152,37 +133,95 @@ function getRandomInt(max) {
 
 
 
+function crearElemento(objeto, elementoHTML, atributo, contenedor) {
+
+    const elementoCreado = document.createElement(elementoHTML);
+    const valor = objeto[atributo];
+    elementoCreado.innerHTML = `${atributo}: ` + valor;
+    contenedor.appendChild(elementoCreado);
+}
 
 
 
-function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos, section) {
 
-    if (mostrarTodosLosAtributos) {
-        const userElement = document.createElement("h2");
-        const userid = elemento.userId;
-        userElement.innerHTML = 'userId: ' + userid;
-        contenedorElemento.appendChild(userElement);
-    }
-
-    const idElement = document.createElement("h3");
-    const id = elemento.id;
-    idElement.innerHTML = 'id: ' + id;
-    contenedorElemento.appendChild(idElement);
-
-    const titulo = document.createElement("h4");
-    const title = elemento.title;
-    titulo.innerHTML = 'title: ' + title;
-    contenedorElemento.appendChild(titulo)
+function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) {
 
     if (mostrarTodosLosAtributos) {
-        const descripcion = document.createElement("p");
-        const body = elemento.body;
-        descripcion.innerHTML = 'body: ' + body;
-        contenedorElemento.appendChild(descripcion);
+        crearElemento(elemento, 'h2', 'userId', contenedorElemento)
     }
-
-    if (section) {
-
+    crearElemento(elemento, 'h3', 'id', contenedorElemento)
+    crearElemento(elemento, 'h4', 'title', contenedorElemento)
+    if (mostrarTodosLosAtributos) {
+        crearElemento(elemento, 'p', 'body', contenedorElemento)
     }
+}
 
+
+
+function selector() {
+
+    const contenedor = document.getElementById('div-selector')
+    console.log(contenedor);
+
+    fetch("https://jsonplaceholder.typicode.com/users/1/posts")
+        .then((respuesta) => {
+            if (!respuesta.ok) {
+                throw new Error(' Error al cargar la APi', console.error)
+            }
+            return respuesta.json();
+        })
+        .then((data) => {
+            contenedor.innerHTML = '';
+            if (data) {
+                data.forEach(element => {
+                    console.log(data);
+
+                    pintarElemento(element, contenedor, false, true);
+                })
+
+            }
+            else {
+                contenedor.innerHTML = 'has pinchado'
+            }
+
+
+        })
+        .catch((error) => {
+            console.error("Error de carga de la API", error);
+            contenedor.innerHTML = "Error, disculpe las molestias, inténtelo de nuevo más tarde";
+        });
+}
+
+
+function seleccion(event) {
+    console.log(event)
+
+    const opcionSeleccionada = event.target.value;
+    const contenedor = document.getElementById('div-selector')
+    contenedor.innerHTML = '';
+    data.forEach((element) => {
+        pintarSeleccion(element, contenedor, opcionSeleccionada);
+
+    });
+
+
+
+}
+
+function pintarSeleccion(elemento, contenedorElemento, opcion) {
+    console.log(opcion)
+
+    if (opcion === 'userId') {
+        crearElemento(elemento, 'p', 'userId', contenedorElemento)
+    }
+    if (opcion === 'id') {
+
+        crearElemento(elemento, 'p', 'id', contenedorElemento)
+    }
+    if (opcion === 'body') {
+        crearElemento(elemento, 'p', 'body', contenedorElemento)
+    }
+    if (opcion === 'title') {
+        crearElemento(elemento, 'p', 'title', contenedorElemento)
+    }
 }
