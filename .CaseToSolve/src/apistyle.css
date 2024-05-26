@@ -1,0 +1,216 @@
+* {
+  border-radius: 3px;
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  margin: 5px;
+}
+body {
+  background: grey;
+}
+h1 {
+  padding: 30px;
+  font-size: 40px;
+  text-align: center;
+}
+
+/* ESTILO CONTENEDOR */
+
+#container {
+  justify-content: center;
+  display: grid;
+  grid-template-areas:
+    "section fullApi"
+    "randomPhoto randomData";
+  grid-template-columns: 600px 600px;
+  grid-template-rows: 600px 360px;
+  gap: 100px;
+  width: 90%;
+  padding: 20px;
+  margin: 10px;
+}
+
+/* ESTILO DIV FULL API */
+/* TIENE ESTILO DADO DESDE JS TAMBIEN */
+
+.box-info {
+  height: 600px;
+  width: 500px;
+  padding: 10px;
+}
+
+.flex {
+  margin: 10px;
+  justify-items: center;
+  display: flex;
+
+  .wrapper-contenido-info {
+    grid-area: fullApi;
+    width: 550px;
+    justify-self: center;
+    padding: 20px;
+    max-height: 600px;
+    overflow: hidden;
+    position: relative;
+
+    #contenido-info {
+      transition: all 0.5s;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 10px;
+
+      h2 {
+        font-size: 20px;
+        color: #e6ddec;
+      }
+      h3 {
+        font-size: 20px;
+
+        color: #b695c0;
+      }
+      h4 {
+        font-size: 20px;
+
+        color: #dcd3e2;
+      }
+      p {
+        font-size: 20px;
+
+        color: #ebe4f1;
+      }
+    }
+  }
+
+  .wrapper-btnArrows {
+    margin: inherit;
+    width: 100px;
+    height: 490px;
+    justify-content: center;
+
+    .btnArrows {
+      height: 490px;
+      width: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
+/* ESTILO DIV RANDOM API */
+/* TIENE ESTILO DADO DESDE JS TAMBIEN */
+
+.wrapper-contenido-random {
+  grid-area: randomData;
+  color: white;
+  height: 350px;
+  line-height: 1;
+  .flex {
+    padding-left: 30px;
+    margin: 0;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    #contenido-random {
+      height: 300px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      h3,
+      p {
+        padding-left: 10px;
+        margin: 30px;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+/* ESTILO DIV PHOTO */
+/* TIENE ESTILO DADO DESDE JS TAMBIEN */
+
+.wrapper-contenido-photo {
+  grid-area: randomPhoto;
+
+  .flex {
+    gap: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    height: 300px;
+  }
+  .contenido-photo {
+    height: fit-content;
+  }
+}
+
+/* ESTILO DIV SELECTOR */
+
+#container .wrapper-contenido-section {
+  background: white;
+  height: 620px;
+  grid-area: section;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 250px 300px;
+  grid-template-rows: 200px 150px;
+  grid-template-areas:
+    ". contenido "
+    "spn contenido"
+    "select contenido";
+
+  #span-selector {
+    background: red;
+    grid-area: spn;
+    align-self: flex-end;
+  }
+  .wrapper-selector {
+    text-align: center;
+    background: green;
+  }
+  #selector {
+    grid-area: select;
+
+    select {
+      padding: 10px;
+    }
+  }
+  #div-selector {
+    background: yellow;
+    grid-area: contenido;
+    overflow-y: scroll;
+    max-height: 450px;
+    align-self: flex-end;
+  }
+}
+
+.icon-animate {
+  display: flex;
+  justify-content: center;
+}
+
+.icon-animate > button {
+  justify-content: center;
+  width: 200px;
+  height: 80px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+.icon-animate button > .gif {
+  display: none;
+  border-radius: 5px;
+}
+.icon-animate:hover button > .gif {
+  display: flex;
+}
+.icon-animate:hover button > .icon {
+  display: none;
+}
+.icon-animate button > .icon {
+  display: flex;
+}

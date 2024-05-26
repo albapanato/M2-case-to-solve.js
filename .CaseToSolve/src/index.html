@@ -9,136 +9,30 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Coustard:wght@400;900&family=Manrope:wght@200..800&family=MedievalSharp&family=Rubik+Scribble&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="apistyle.css" />
     <title>Unidad 2-Case to Solve</title>
-    <style>
-      body {
-        background: grey;
-      }
-      h1 {
-        padding: 30px;
-        font-size: 40px;
-        text-align: center;
-      }
-
-      #container {
-        height: 600px;
-        justify-content: center;
-        display: grid;
-        grid-template-areas:
-          "randomData . . fullApi"
-          "randomPhoto . . fullApi"
-          "section section . . ";
-        /* agregar mas si necesario al crear section */
-
-        grid-template-rows: 300px 600px 500px;
-        width: 100%;
-        padding: 20px;
-        margin: 10px;
-      }
-      #container .wrapper-contenido-info {
-        grid-area: fullApi;
-        width: 500px;
-        justify-self: center;
-      }
-      #container .wrapper-contenido-photo {
-        grid-area: randomPhoto;
-        .flex {
-          display: flex;
-          align-items: center;
-          min-height: 400px;
-        }
-      }
-      #container .wrapper-contenido-random {
-        grid-area: randomData;
-        .flex {
-          display: flex;
-          align-items: center;
-          min-height: 300px;
-          max-width: 550px;
-          gap: 30px;
-        }
-      }
-      #container .wrapper-contenido-section {
-        grid-area: section;
-        display: grid;
-        grid-template-columns: 200px 200px 50px 300px;
-        grid-template-rows: 100px 100px 100px;
-        grid-template-areas:
-          "spn spn . contenido"
-          ". select . contenido"
-          ". btn . contenido";
-
-        #span-selector {
-          grid-area: spn;
-          align-self: center;
-        }
-        #selector {
-          grid-area: select;
-          select {
-            width: 100px;
-            padding: 5px;
-          }
-        }
-
-        #btn-selector {
-          grid-area: btn;
-          button {
-            padding: 10px;
-            width: 100px;
-          }
-        }
-
-        #div-selector {
-          grid-area: contenido;
-        }
-      }
-
-      #contenido-info {
-        margin-top: 30px;
-        h2,
-        h3,
-        h4,
-        p {
-          font-size: 18px;
-        }
-      }
-      .icon-animate {
-        display: flex;
-        justify-content: center;
-      }
-
-      .icon-animate > button {
-        justify-content: center;
-        width: 200px;
-        height: 90px;
-        margin: 0;
-        display: flex;
-        align-items: center;
-      }
-      .icon-animate button > .gif {
-        display: none;
-        border-radius: 5px;
-      }
-      .icon-animate:hover button > .gif {
-        display: flex;
-      }
-      .icon-animate:hover button > .icon {
-        display: none;
-      }
-      .icon-animate button > .icon {
-        display: flex;
-      }
-    </style>
   </head>
   <body>
-    <header></header>
+    <header>
+      <!-- boton full APi -->
+
+      <!-- boton random photo -->
+
+      <!-- boton random info -->
+    </header>
     <main>
       <h1>Random API</h1>
       <!-- dar estilo chulo con css -->
 
+      <!-- contenedor full api -->
       <div id="container">
-        <!-- contenedor full api -->
-        <div class="wrapper-contenido-info">
+        <div class="box-info">
           <div class="icon-animate">
             <button onclick="infoApi()">
               <img
@@ -157,7 +51,14 @@
             </button>
           </div>
 
-          <div id="contenido-info"></div>
+          <div class="flex">
+            <div class="wrapper-contenido-info">
+              <div id="contenido-info"></div>
+            </div>
+            <div class="wrapper-btnArrows">
+              <div class="btnArrows"></div>
+            </div>
+          </div>
         </div>
 
         <!-- contenedor fotos -->
@@ -209,12 +110,13 @@
             <div id="contenido-random"></div>
           </div>
         </div>
+
         <div class="wrapper-contenido-section">
           <span id="span-selector">
             Choose from the options given and press the botton to be able to see
             the data from the API</span
           >
-          <div>
+          <div class="wrapper-selector">
             <select name="API" id="selector" onchange="seleccion(event)">
               <option class="opcion" value="userId">userId</option>
               <option class="opcion" value="id">id</option>
@@ -222,25 +124,12 @@
               <option class="opcion" value="body">body</option>
             </select>
           </div>
-          <div id="btn-selector"></div>
           <div class="contenido-selector" id="div-selector"></div>
         </div>
       </div>
     </main>
+    <footer></footer>
 
-    <script src="./script.js">
-      //   function randomInfo() {
-      //     const datos = [1, 2, 3, 4];
-      //     const info = document.getElementById("contenido-info");
-
-      //     for (let i = 0; i < datos.length; i++) {
-      //       const parrafo = document.createElement("p");
-      //       const elementos = datos[i];
-      //       console.log(elementos);
-      //       parrafo.innerText = elementos;
-      //       info.appendChild(parrafo);
-      //     }
-      //   }
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>

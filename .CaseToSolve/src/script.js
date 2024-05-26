@@ -1,25 +1,7 @@
-// url de la API-OFRECIDA EN EL CASE TO SOLVE:https:jsonplaceholder.typicode.com/albums/1/photos
-// url de API-photos:https://picsum.photos/200/300
-// url de API- https://lorem-json.com/api/json
-
-//Funcionalidad botones
-
-//agregar text botones "utilizar simbolos ASCII" -- https://read.pubwriter.com/fancy
-
-// utilizar almenos una de cada, promesas controladas con setTimeOut, funciones(funcion flecha, funcion constructora, con parametros, con ...rest ), alguna funcion de array(recorrer array o filtrar,etc),bucle, alguna matematica simple(contador,++,-- en botones)
-
-/**modificar HTML desde JS ejemplo:
- 
-    var contenido = document.getElementById("contenido");
-
-      function obtener() {
-        contenido.innerHTML = "<p>algo</p>"; // creas un parrafo
-      }
- *  */
-
-
+//---------------- PARTE: LLAMADA A LA API ----------------------//
 let data = []
-const obtenerInfo = () => {
+
+const callingApi = () => {
     fetch("https://jsonplaceholder.typicode.com/users/1/posts")
         .then((respuesta) => {
             if (!respuesta.ok) {
@@ -42,67 +24,125 @@ const obtenerInfo = () => {
 }
 
 window.onload = () => {
-    obtenerInfo()
+    callingApi()
 }
 
-// 1. Obtener datos de la API:
+//------------------ PARTE: PINTAR Y CREAR ELEMENTOS ---------------------//
+
+function crearElemento(objeto, elementoHTML, atributo, contenedor) {
+    //logica para gestion elementos DOM para optimizar el codigo 
 
 
-function mostrarDadta() {
-    console.log(data)
+    const elementoCreado = document.createElement(elementoHTML);
+    const valor = objeto[atributo];
+    elementoCreado.innerHTML = `${atributo}: ` + valor;
+    contenedor.appendChild(elementoCreado);
 }
 
+function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) {
 
-async function infoApi() {
-    const info = document.getElementById("contenido-info"); // gestion DOM
-
-    //Estilo al contenedor de la API desde JS
-    info.style.border = '5px solid #0b5ed7'
-    info.style.borderRadius = '5px'
-    info.style.padding = '20px'
-    info.style.maxHeight = '450px'
-
-    info.style.overflow = 'scroll'
-
-    info.innerHtml = ""; // para vaciar el contenido previo
-    data.forEach(element => {
-
-        pintarElemento(element, info, true); // Utilizamos funcion para 'pintar' los elementos en el DOM
-
-    });
-
-    console.log('computed', window.getComputedStyle(info))
-    console.log('computstyleed', info.style)
-
-
-    if (!info.style.display || info.style.display === 'none' || info.innerHTML === '') {
-        info.style.display = 'block';
-    } else {
-        console.log('entra')
-        info.style.display = 'none';
+    if (mostrarTodosLosAtributos) {
+        crearElemento(elemento, 'h2', 'userId', contenedorElemento)
+    }
+    crearElemento(elemento, 'h3', 'id', contenedorElemento)
+    crearElemento(elemento, 'p', 'body', contenedorElemento)
+    if (mostrarTodosLosAtributos) {
+        crearElemento(elemento, 'h4', 'title', contenedorElemento)
     }
 }
 
+//--------------------------PARTE: FULL API -------------------------//
+
+const boxInfo = document.querySelector(".box-info")
+const frame = document.querySelector('.wrapper-contenido-info');
+const info = document.getElementById("contenido-info");
+
+async function infoApi() {
+
+    boxInfo.style.boxShadow = '2px 4px 12px black';
+    boxInfo.style.background = '#e0b0ff'
+    frame.style.boxShadow = '2px 4px 12px black';
+    frame.style.background = '#090314'
+    frame.style.height = '450px'
+    info.style.height = '450px'
+    info.innerHtml = ""; // para vaciar el contenido previo
+    data.forEach(element => {
+        pintarElemento(element, info, true); // Utilizamos funcion para 'pintar' los elementos en el DOM
+    });
+    crearArrow();
+    // NOTA:  
+    // console.log('computed', window.getComputedStyle(info)) -- saca mas propiedades css
+    // console.log('computstyleed', info.style) -- que .style
+    if (!info.style.display || info.style.display === 'none' || info.innerHTML === '') {
+        info.style.display = 'block';
+
+    } else {
+        console.log('cerrado')
+        boxInfo.style.background = 'none'
+        boxInfo.style.boxShadow = 'none';
+        frame.style.boxShadow = 'none'
+        frame.style.background = 'none'
+        info.style.boxShadow = 'none'
+        info.style.display = 'none';
+        frame.style.border = 'none';
+        contenedorArrow.innerHTML = '';
+    }
+}
+
+//--------------- PARTE: FLECHAS ↑ Y ↓ --------------------//
+
+const contenedorArrow = document.querySelector('.btnArrows')
+
+function crearArrow() { // CREAR FLECHAS
+    const btnUp = document.createElement('button');
+    btnUp.className = 'btn-up'
+    btnUp.innerText = '↑'//meter si funciona ascii symbolos
+    contenedorArrow.appendChild(btnUp);
+    btnUp.onclick = () => {
+        scrollDataUp()
+    }
+    const btnDown = document.createElement('button');
+    btnDown.className = 'btn-down'
+    btnDown.innerText = '↓'//meter si funciona ascii symbolos
+    contenedorArrow.appendChild(btnDown);
+    btnDown.onclick = () => {
+        scrollDataDown()
+    }
+}
+
+const desplazamientoPixeles = 340;
+let posicionamientoScroll = 0;
+
+function scrollDataUp() { // FUNCIONALIDAD FLECHAS
+    console.log('arriba')
+    posicionamientoScroll = Math.max(posicionamientoScroll - desplazamientoPixeles, 0)
+    info.style.top = -posicionamientoScroll + 'px';
+}
+
+function scrollDataDown() {  // FUNCIONALIDAD FLECHAS
+    console.log('abajo')
+    const maximoScroll = info.scrollHeight - info.clientHeight;// Buscar ambos atributos
+    posicionamientoScroll = Math.min(posicionamientoScroll + desplazamientoPixeles, maximoScroll);
+    info.style.top = -posicionamientoScroll + 'px';
+}
+
+//--------------------------PARTE: PHOTO RANDOM ---------------------------------//
+
 function randomPhoto() {
-    const photo = document.getElementById("contenido-photo"); // gestion DOM
-    photo.innerHTML = "<span> </span>";// gestion DOM
-
-    //Estilo a la imagen desde JS
-
-
-    photo.style.padding = '20px'
+    const framePhoto = document.querySelector('.wrapper-contenido-photo');
+    const photo = document.getElementById("contenido-photo");
+    framePhoto.style.boxShadow = "2px 4px 12px black";
+    framePhoto.style.background = '#e0b0ff'
     photo.style.justifyContent = 'center'
-    // photo.style.marginTop = '20px'
-
     fetch("https://picsum.photos/300")
         .then((respuesta) => {//Promesas
             if (respuesta.ok) {
-                const img = document.createElement("img");// gestion DOM
-                img.src = respuesta.url;// gestion DOM
-                img.alt = "Random photo";// gestion DOM
-
-                photo.innerHTML = "";// gestion DOM
-                photo.appendChild(img);//agregamos hijo
+                const img = document.createElement("img");// creamos elemento img
+                img.src = respuesta.url;// asignamos src = url
+                img.alt = "Random photo";// nombramos alt="Random photo" 
+                img.style.boxShadow = '2px 4px 12px black';
+                photo.innerHTML = "";// vaciamos mensaje 'Cargando imagen random...'
+                photo.appendChild(img);//decimos que contenido-photo va a tener un hijo img
             } else {
                 console.error("Error al obtener la foto");
             }
@@ -112,57 +152,37 @@ function randomPhoto() {
         });
 }
 
+//----------------- PARTE: INFORMACION RANDOM ----------------//
 
 function randomInfo() {
-
+    const frameInfo = document.querySelector('.wrapper-contenido-random')
     const random = document.querySelector('#contenido-random')
-    random.style.textAlign = 'center'
-    random.style.width = '300px'
-    random.innerHTML = '';
+    frameInfo.style.background = '#e0b0ff'
+    frameInfo.style.boxShadow = "2px 4px 12px black";
+    random.style.boxShadow = "2px 4px 12px black";
+    random.style.background = '#090314'
+    random.style.textAlign = 'center'; // Para centrar el mensaje siguiente
+    random.innerText = 'Obteniendo informacion random de los atributos id y body de la API'
+    random.style.margin = '20px'
+    setTimeout(() => {
 
-    const lengthArray = data.length
-    const numRandom = getRandomInt(lengthArray)
-    pintarElemento(data[numRandom], random)
+        random.innerText = ''; // vaciamos mensaje 'Obteniendo informacion random de los atributos id y title de la API'
+        const lengthArray = data.length // variable con valor longitud del array
+        const numRandom = sacarCalculoRandom(lengthArray) // variable con valor = metodo para hacer el calculo (longitud array)
+        pintarElemento(data[numRandom], random) // llamamos a la funcion pintarElemento(array[resultado tipo number de el calculo numRandom], contenedor a ser pintado)
+    }, 2000)
 }
 
 
-
-function getRandomInt(max) {
+function sacarCalculoRandom(max) { // logica numero random
     return Math.floor(Math.random() * max);
 }
 
-
-
-function crearElemento(objeto, elementoHTML, atributo, contenedor) {
-
-    const elementoCreado = document.createElement(elementoHTML);
-    const valor = objeto[atributo];
-    elementoCreado.innerHTML = `${atributo}: ` + valor;
-    contenedor.appendChild(elementoCreado);
-}
-
-
-
-
-function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) {
-
-    if (mostrarTodosLosAtributos) {
-        crearElemento(elemento, 'h2', 'userId', contenedorElemento)
-    }
-    crearElemento(elemento, 'h3', 'id', contenedorElemento)
-    crearElemento(elemento, 'h4', 'title', contenedorElemento)
-    if (mostrarTodosLosAtributos) {
-        crearElemento(elemento, 'p', 'body', contenedorElemento)
-    }
-}
-
-
+//-------------- PARTE: SELECTOR DE LA API PARA MOSTRAR INFORMACION SELECCIONADA--------------///
 
 function selector() {
-
     const contenedor = document.getElementById('div-selector')
     console.log(contenedor);
-
     fetch("https://jsonplaceholder.typicode.com/users/1/posts")
         .then((respuesta) => {
             if (!respuesta.ok) {
@@ -174,17 +194,13 @@ function selector() {
             contenedor.innerHTML = '';
             if (data) {
                 data.forEach(element => {
-                    console.log(data);
-
+                    // console.log(data);
                     pintarElemento(element, contenedor, false, true);
                 })
-
             }
             else {
                 contenedor.innerHTML = 'has pinchado'
             }
-
-
         })
         .catch((error) => {
             console.error("Error de carga de la API", error);
@@ -204,9 +220,8 @@ function seleccion(event) {
 
     });
 
-
-
 }
+
 
 function pintarSeleccion(elemento, contenedorElemento, opcion) {
     console.log(opcion)
