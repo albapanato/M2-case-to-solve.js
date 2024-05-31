@@ -8,8 +8,8 @@ This is a brief explanation of my "MODULE 2: JavaScript" final project were try 
 
 - To create logic to achieve the objectives bellow:
 
-  - A <button>Random photo API</button> who shown random pictures from a external source.
-    ` <button onclick="randomPhoto()">`
+  - A <button>Random pictures</button> who shown random pictures from a external source.
+    ` <button onclick="loadPhoto()">`
 
   - A <button>Full API data</button> who shows API full data.
     `<button onclick="infoApi()">`

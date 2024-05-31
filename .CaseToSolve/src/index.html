@@ -64,61 +64,57 @@
         <!-- contenedor fotos -->
 
         <div class="wrapper-contenido-photo">
-          <div class="flex">
-            <div class="icon-animate">
-              <button onclick="randomPhoto()">
-                <img
-                  class="icon"
-                  src="./icons/icons8-pila-de-fotos-64.png"
-                  alt="icon random photo"
-                  title="icon random photo"
-                />
-                <img
-                  class="gif"
-                  src="./icons//icons8-pila-de-fotos.gif"
-                  alt="gif random photo"
-                  title="gif random photo"
-                />
-                Random photo API
-              </button>
-            </div>
-
-            <div id="contenido-photo"></div>
+          <div class="icon-animate border-boton">
+            <button onclick="loadPhoto()">
+              <img
+                class="icon"
+                src="./icons/icons8-pila-de-fotos-64.png"
+                alt="icon random photo"
+                title="icon random photo"
+              />
+              <img
+                class="gif"
+                src="./icons//icons8-pila-de-fotos.gif"
+                alt="gif random photo"
+                title="gif random photo"
+              />
+              Random pictures
+            </button>
           </div>
+          <div id="contenido-photo"></div>
         </div>
 
         <!-- contenedor random info api -->
 
         <div class="wrapper-contenido-random">
-          <div class="flex">
-            <div class="icon-animate">
-              <button onclick="randomInfo()">
-                <img
-                  class="icon"
-                  src="./icons/icons8-opción-múltiple-50.png"
-                  alt="icon random data"
-                />
-                <img
-                  class="gif"
-                  src="./icons/icons8-opción-múltiple.gif"
-                  alt="gif random data"
-                />
-                Random data API
-              </button>
-            </div>
-
-            <div id="contenido-random"></div>
+          <div class="icon-animate">
+            <button onclick="randomInfo()">
+              <img
+                class="icon"
+                src="./icons/icons8-opción-múltiple-50.png"
+                alt="icon random data"
+              />
+              <img
+                class="gif"
+                src="./icons/icons8-opción-múltiple.gif"
+                alt="gif random data"
+              />
+              Random data API
+            </button>
           </div>
+          <div id="contenido-random"></div>
         </div>
 
         <div class="wrapper-contenido-section">
-          <span id="span-selector">
-            Choose from the options given and press the botton to be able to see
-            the data from the API</span
-          >
+          <div id="text-selector">
+            CHOOSE FROM EACH KEY TOBE ABLE TO SEE THE VALUE TO ALL OF THEM
+            <br />
+            <img src="./key-value.png" alt="img key:value" />
+          </div>
           <div class="wrapper-selector">
             <!-- Asignacion de evento onchange="funcion(parametro)"-->
             <select name="API" id="selector" onchange="seleccion(event)">
+              <option class="opcion" value="userId">select one</option>
               <option class="opcion" value="userId">userId</option>
               <option class="opcion" value="id">id</option>
               <option class="opcion" value="title">title</option>

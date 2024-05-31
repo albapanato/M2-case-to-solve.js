@@ -56,15 +56,16 @@ const info = document.getElementById("contenido-info");
 async function infoApi() {
 
     boxInfo.style.boxShadow = '2px 4px 12px black';
-    info.style.transition = 'all 1.3s'
-    frame.style.transition = 'all 1.3s'
     boxInfo.style.background = '#190065'
     boxInfo.style.height = '700px'
+    frame.style.borderRadius = '35px 0px 35px 0px'
     frame.style.opacity = '95%'
     frame.style.boxShadow = '2px 4px 12px black';
     frame.style.background = '#9a9aeb'
     frame.style.display = 'block'
     frame.style.height = '550px'
+    frame.style.transition = 'all 1.3s'
+    info.style.transition = 'all 1.3s'
     info.style.height = '550px'
     info.innerHtml = ""; // para vaciar el contenido previo
     contenedorArrow.style.height = '600px';
@@ -212,52 +213,106 @@ function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) 
 
 //--------------------------PARTE DEL CODIGO DE FOTO RANDOM ---------------------------------//
 
-function randomPhoto() {
-
+/**
+ function randomPhoto() {
     const framePhoto = document.querySelector('.wrapper-contenido-photo');
     const photo = document.getElementById("contenido-photo");
+     
     framePhoto.style.boxShadow = "2px 4px 12px black";
     framePhoto.style.background = '#190065'
     photo.style.justifyContent = 'center'
     photo.innerHTML = " Cargando imagen Random ... "
-
+ 
     setTimeout(() => {
         fetch("https://picsum.photos/300")
+        .then((respuesta) => {
+            if (respuesta.ok) {
+                const img = document.createElement("img");// creamos elemento img
+                img.src = respuesta.url;// asignamos src = url
+                img.alt = "Random photo";// nombramos alt="Random photo" 
+                img.style.boxShadow = '2px 4px 12px black';
+                
+                const img2 = document.createElement("img")
+                img2.src = respuesta.url;// asignamos src = url
+                img2.alt = "Random photo2";// nombramos alt="Random photo" 
+                img2.style.boxShadow = '2px 4px 12px black';
+                
+                const img3 = document.createElement("img")
+                img3.src = respuesta.url;// asignamos src = url
+                img3.alt = "Random photo3";// nombramos alt="Random photo" 
+                img3.style.boxShadow = '2px 4px 12px black';
+                
+                const img4 = document.createElement("img");// creamos elemento img
+                img4.src = respuesta.url;// asignamos src = url
+                img4.alt = "Random photo";// nombramos alt="Random photo" 
+                img4.style.boxShadow = '2px 4px 12px black';
+                
+                photo.innerHTML = "";// vaciamos mensaje 'Cargando imagen random...'
+                
+                photo.appendChild(img);//decimos que contenido-photo va a tener un hijo img
+                photo.appendChild(img2);
+                photo.appendChild(img3);
+                photo.appendChild(img4);
 
-            .then((respuesta) => {
-                if (respuesta.ok) {
-                    const img = document.createElement("img");// creamos elemento img
-                    img.src = respuesta.url;// asignamos src = url
-                    img.alt = "Random photo";// nombramos alt="Random photo" 
-                    img.style.boxShadow = '2px 4px 12px black';
-                    const img2 = document.createElement("img")
-                    img2.src = respuesta.url;// asignamos src = url
-                    img2.alt = "Random photo2";// nombramos alt="Random photo" 
-                    img2.style.boxShadow = '2px 4px 12px black';
-                    const img3 = document.createElement("img")
-                    img3.src = respuesta.url;// asignamos src = url
-                    img3.alt = "Random photo3";// nombramos alt="Random photo" 
-                    img3.style.boxShadow = '2px 4px 12px black';
-                    const img4 = document.createElement("img");// creamos elemento img
-                    img4.src = respuesta.url;// asignamos src = url
-                    img4.alt = "Random photo";// nombramos alt="Random photo" 
-                    img4.style.boxShadow = '2px 4px 12px black';
-                    photo.innerHTML = "";// vaciamos mensaje 'Cargando imagen random...'
-                    photo.appendChild(img);//decimos que contenido-photo va a tener un hijo img
-                    photo.appendChild(img2);
-                    photo.appendChild(img3);
-                    photo.appendChild(img4);
+            } else {
+                console.error("Error al obtener la foto");
+            }
+        })
 
-                } else {
-                    console.error("Error al obtener la foto");
-                }
-            })
-
-            .catch((error) => {
-                console.error("Error en la solicitud:", error);
-            });
-
+        .catch((error) => {
+            console.error("Error en la solicitud:", error);
+        });
+ 
     }, 600)
+}
+ 
+FUNCION MODIFICADA PARA QUE APAREZCAN 4 IMAGENES DIFERENTES EN LUGAR DE 4 VECES LA MISMA FOTO
+ */
+
+const framePhoto = document.querySelector('.contenedor');
+const photo = document.getElementById("contenido-photo");
+
+function callingRandomPhotoAPI() {
+    return fetch("https://picsum.photos/250").then(response => {
+        if (response.ok) {
+            return response.url;
+        } else {
+            throw new Error('Error al obtener la foto');
+        }
+    });
+}
+
+function createdImage(src, alt, clss) {
+    const img = document.createElement("img");
+    img.src = src// asignamos src = url
+    img.alt = alt;// nombramos alt="Random photo" 
+    img.className = clss;
+    img.style.boxShadow = '2px 4px 12px black';
+    return img;
+}
+
+function loadPhoto() {
+    photo.innerHTML = "Cargando imagen..."
+    Promise.all([
+        callingRandomPhotoAPI(),
+        callingRandomPhotoAPI(),
+        callingRandomPhotoAPI(),
+        callingRandomPhotoAPI(),
+        callingRandomPhotoAPI()
+    ])
+        .then((urls) => {
+            photo.innerHTML = "";
+            urls.forEach((url, index, clss) => {
+                const img = createdImage(url, `Radom photo ${index + 1}`, `imgClase${clss = index + 1}`);
+                photo.appendChild(img);
+            });
+        })
+        .catch((error) => {
+            console.log('Error .catch al realizar la solicitud', error);
+            photo.innerHTML = "Error al cargar las imagenes"
+        })
+
+
 }
 
 //----------------- PARTE DEL CODIGO PARA MOSTAR INFORMACION RANDOM DE LA MISMA API----------------//
@@ -267,21 +322,28 @@ function randomInfo() {
     const frameInfo = document.querySelector('.wrapper-contenido-random')
     const random = document.querySelector('#contenido-random')
 
-    frameInfo.style.background = '#190065'
+    random.innerText = '' // Para vaciar el contenido y vuelva hacer la animacion
+
+    // frameInfo.style.background = '#190065'
     frameInfo.style.boxShadow = "2px 4px 12px black";
     random.style.boxShadow = "2px 4px 12px black";
+    random.style.animation = '1.2s linear ddrandomInfo';
+    random.style.marginTop = '15px';
+    random.style.height = '150px';
     random.style.background = '#9a9aeb'
-    random.style.textAlign = 'center';
-    random.innerText = 'Obteniendo informacion random de los atributos id y body de la API'
+    random.style.borderRadius = '35px 0px 35px 0px';
+    random.style.border = '2px solid #0d0d0e';
+
 
     setTimeout(() => {
 
+        random.style.animation = 'none';
         random.innerText = ''; // vaciamos mensaje 'Obteniendo informacion random de los atributos id y title de la API'
         const lengthArray = data.length // variable con valor longitud del array
         const numRandom = sacarCalculoRandom(lengthArray) // variable con valor = metodo para hacer el calculo (longitud array)
         pintarElemento(data[numRandom], random) // llamamos a la funcion pintarElemento(array[resultado tipo number de el calculo numRandom], contenedor a ser pintado)
 
-    }, 1000)
+    }, 1500)
 
 }
 
@@ -343,24 +405,26 @@ function seleccion(event) {
 
 function pintarSeleccion(elemento, contenedorElemento, opcion) {
     const contenedor = document.getElementById('div-selector')
-    contenedor.style.height = '500px'
+    contenedor.style.height = '450px'
+    contenedor.style.overflowY = 'scroll';
     console.log(opcion)
+
 
     if (opcion === 'userId') {
         crearElemento(elemento, 'p', 'userId', contenedorElemento)
-        contenedor.style.background = 'white'
+        contenedor.style.background = '#0ae695'
     }
     if (opcion === 'id') {
 
         crearElemento(elemento, 'p', 'id', contenedorElemento)
-        contenedor.style.background = 'yellow'
+        contenedor.style.background = '#3d0cd0'
     }
     if (opcion === 'body') {
         crearElemento(elemento, 'p', 'body', contenedorElemento)
-        contenedor.style.background = 'orange'
+        contenedor.style.background = '#0c40d0'
     }
     if (opcion === 'title') {
         crearElemento(elemento, 'p', 'title', contenedorElemento)
-        contenedor.style.background = 'green'
+        contenedor.style.background = '#850cd0'
     }
 }
