@@ -1,3 +1,5 @@
+<style> img {width:500px;}</style>
+
 # Module 2: Case to solve
 
 ### Project description:
@@ -27,9 +29,19 @@ This is a brief explanation of my "MODULE 2: JavaScript" final project were try 
   - `function seleccion(event)`
 
 - DOM management
+
   - create elements
   - point at elements
-  - give style to elements (even if it may be better option to do with CSS)
+  - give style to elements (even if it may be better option to do with CSS):
+
+    With those styles bellow, I made possible to see the dropdown effect when the `<button onclick="infoApi()">` clicks.
+
+    ![Async function infoApi()](image-2.png)
+
+    In addition, you could see the reversed effect as if the info would disappear when the `<button onclick="infoApi()">` clicks again.
+
+    ![Async function infoApi()- if , else ](image.png)
+
   - create new style to elements (even if it may be better option to do with CSS)
 
 ### Sources:
