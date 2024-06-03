@@ -18,95 +18,55 @@
     opacity: 5%;
   }
   100% {
+    height: 250px;
+    opacity: 95%;
+  }
+}
+@keyframes ddphoto {
+  /* Animacion para las imagenes de la API */
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 5%;
+  }
+  100% {
+    width: 150px;
     height: 150px;
     opacity: 95%;
   }
 }
 
-@keyframes ddphoto1 {
-  /* Animacion para el despligable de la API */
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 5%;
-  }
-  100% {
-    width: 250px;
-    height: 250px;
-    opacity: 95%;
-  }
-}
-
-@keyframes ddphoto2 {
-  /* Animacion para el despligable de la API */
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 5%;
-  }
-  100% {
-    width: 230px;
-    height: 230px;
-    opacity: 95%;
-  }
-}
-
-@keyframes ddphoto3 {
-  /* Animacion para el despligable de la API */
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 5%;
-  }
-  100% {
-    width: 210px;
-    height: 210px;
-    opacity: 95%;
-  }
-}
-
-@keyframes ddphoto4 {
-  /* Animacion para el despligable de la API */
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 5%;
-  }
-  100% {
-    width: 190px;
-    height: 190px;
-    opacity: 95%;
-  }
-}
-@keyframes ddphoto5 {
-  /* Animacion para el despligable de la API */
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 5%;
-  }
-  100% {
-    width: 170px;
-    height: 170px;
-    opacity: 95%;
-  }
-}
-
 * {
-  font-family: "Cinzel", serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
   font-style: normal;
 }
-body {
-  width: 100%;
-  height: 250vh;
-  background: linear-gradient(to bottom, #abbde8, #4274cc, #1a195c, #000000);
-}
-h1 {
+
+header {
   text-align: center;
-  /* Crear titulo chulo */
-  height: 150px;
+  color: white;
+  h1 {
+    font-size: 50px;
+    text-align: center;
+  }
+}
+
+.background {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 99%;
+  position: absolute;
+  z-index: -1;
+  opacity: 40%;
+  height: 150vh;
+}
+body {
+  margin: 0;
+  width: 98%;
+  height: 160vh;
+  background: linear-gradient(to bottom, #000000, #084e4e);
 }
 
 /* ESTILO BOTONES Y CONTENEDORES DE BOTONES */
@@ -117,15 +77,15 @@ h1 {
 }
 
 .icon-animate > button {
-  border-radius: 35px 0px 35px 0px;
-
-  border: 2px solid #9bcebb;
+  border-radius: 35px;
+  border: 8px dashed #036469;
   justify-content: center;
   width: 100%;
   height: 80px;
   margin: 0;
   display: flex;
   align-items: center;
+  background: #fcffd4;
 }
 .icon-animate button > .gif {
   display: none;
@@ -139,7 +99,6 @@ h1 {
 }
 .icon-animate button > .icon {
   display: flex;
-  color: #0c13d0;
 }
 
 /* ESTILO CONTENEDOR */
@@ -149,14 +108,12 @@ h1 {
   justify-content: center;
   display: grid;
   grid-template-areas:
-    "randomPhoto "
-    "fullApi "
-    "randomData "
-    "section";
-  grid-template-columns: 90%;
+    "fullApi section "
+    "randomData randomPhoto ";
+  grid-template-columns: 50% 50%;
   gap: 50px;
   height: 50vh;
-  width: 75%;
+  width: 70%;
 }
 
 /* ESTILO DIV FULL API */
@@ -164,8 +121,8 @@ h1 {
 
 .box-info {
   padding: 10px;
-  border-radius: 35px 0px 35px 0px;
-  border: 2px solid #0d0d0e;
+  border-radius: 35px;
+  border: 8px dashed #f314b7;
   height: 80px;
   transition: all 1.1s; /* Animacion para el despligable de la API */
 }
@@ -194,16 +151,25 @@ h1 {
 
     #contenido-info {
       animation: 1.1s linear dropdown; /* Animacion para el despligable de la API */
-
       transition: all 1s;
       position: absolute;
       top: 0;
       left: 0;
       padding: 10px;
 
-      h2,
-      h3,
-      h4,
+      h2 {
+        padding: 0 30px 0 30px;
+        text-align: center;
+        color: #aa5399;
+      }
+      h3 {
+        padding: 0 30px 0 30px;
+        color: #20b6b0;
+      }
+      h4 {
+        padding: 0 30px 0 30px;
+        color: #6f3f6c;
+      }
       p {
         padding: 0 30px 0 30px;
         color: #3f00ff;
@@ -237,21 +203,21 @@ h1 {
 
 .wrapper-contenido-random {
   grid-area: randomData;
-  line-height: 1;
-  border-radius: 35px 0px 35px 0px;
-  border: 2px solid #0d0d0e;
+  line-height: 1.2;
+  border-radius: 35px;
+
+  /* border: 8px dashed #ff54d0; */
   padding: 10px;
   transition: all 1.1s;
 }
 
 .border-boton {
-  border-radius: 35px 0px 35px 0px;
-  border: 2px solid #0d0d0e;
+  border-radius: 35px;
+  border: 8px dashed #f314b7;
   padding: 10px;
 }
 #contenido-random {
   margin: auto;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -259,9 +225,11 @@ h1 {
 
   h3,
   p {
+    text-align: left;
     padding: 0 30px 0 30px;
-    color: white;
-    font-weight: 700;
+    color: #d5d8af;
+    font-weight: 400;
+    letter-spacing: 2px;
   }
 }
 
@@ -277,77 +245,75 @@ h1 {
     gap: 20px;
     justify-content: center;
     width: 100%;
-    transition: all 2s;
-
-    .imgClase1 {
-      border-radius: 35px 0px 35px 0px;
-      animation: 1s linear ddphoto1;
-      width: 250px;
-      height: 250px;
-    }
-    .imgClase2 {
-      border-radius: 35px 0px 35px 0px;
-      animation: 1.2s linear ddphoto2;
-      width: 230px;
-      height: 230px;
-    }
-    .imgClase3 {
-      border-radius: 35px 0px 35px 0px;
-      animation: 1.4s linear ddphoto3;
-      width: 210px;
-      height: 210px;
-    }
-    .imgClase4 {
-      border-radius: 35px 0px 35px 0px;
-      animation: 1.6s linear ddphoto4;
-      width: 190px;
-      height: 190px;
-    }
-    .imgClase5 {
-      border-radius: 35px 0px 35px 0px;
-      animation: 1.8s linear ddphoto5;
-      width: 170px;
-      height: 170px;
-    }
+  }
+  .imgClase1 {
+    border-radius: 10px;
+    animation: 1.4s linear ddphoto;
+  }
+  .imgClase2 {
+    border-radius: 10px;
+    animation: 1.6s linear ddphoto;
+  }
+  .imgClase3 {
+    border-radius: 10px;
+    animation: 1.8s linear ddphoto;
   }
 }
 
 /* ESTILO DIV SELECTOR */
 
 #container .wrapper-contenido-section {
-  border-radius: 35px 0px 35px 0px;
-  border: 2px solid #0d0d0e;
-  padding: 40px;
-  height: 500px;
+  padding: 10px;
+  background: #b7c6aa;
+  width: 100%;
+  border-radius: 10px;
+  border: 10px dashed #036469;
+  justify-content: center;
+  height: 700px;
   grid-area: section;
   display: grid;
-  grid-template-columns: 40% 10% 50%;
-  grid-template-areas: "spn select contenido";
+  gap: 10px;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "spn select"
+    "spn contenido";
 
   #text-selector {
-    grid-area: spn;
     margin: auto;
-    text-align: center;
+    grid-area: spn;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 700px;
+    background: #1e1f25;
+    width: 100%;
+
+    h2 {
+      font-size: 20px;
+      padding: 10px;
+      text-align: center;
+      color: #fcffd4;
+      text-shadow: 2px 4px 8px #05a1c5;
+    }
     img {
-      width: 350px;
+      width: 100%;
     }
   }
-  .wrapper-selector {
-    text-align: center;
-    margin: auto;
-  }
-  #selector {
-    grid-area: select;
 
+  #selector {
+    justify-content: flex-start;
+    grid-area: select;
     select {
+      text-align: center;
+      width: 100%;
       padding: 10px;
     }
   }
   #div-selector {
-    margin: auto;
+    padding-left: 15px;
     grid-area: contenido;
-
-    width: 400px;
+    width: 95%;
   }
 }
 

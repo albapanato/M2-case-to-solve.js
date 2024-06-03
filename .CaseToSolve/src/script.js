@@ -1,4 +1,5 @@
 //---------------- PARTE DEL CODIGO QUE LLAMADA A LA API ----------------------//
+
 let data = [] // Almacenaremos la informacion de la API en este array vacio
 
 /** FUNCION REFACTORIZADA, promesas dependientes de callingApi():  
@@ -12,7 +13,6 @@ let data = [] // Almacenaremos la informacion de la API en este array vacio
 const callingApi = () => {
 
     fetch("https://jsonplaceholder.typicode.com/users/1/posts")
-
         // concatenacion de promesas
         .then((respuesta) => {
             if (!respuesta.ok) {
@@ -52,16 +52,15 @@ const boxInfo = document.querySelector(".box-info")
 const frame = document.querySelector('.wrapper-contenido-info');
 const info = document.getElementById("contenido-info");
 
-
 async function infoApi() {
 
     boxInfo.style.boxShadow = '2px 4px 12px black';
-    boxInfo.style.background = '#190065'
+    // boxInfo.style.background = '#19b4a7'
     boxInfo.style.height = '700px'
     frame.style.borderRadius = '35px 0px 35px 0px'
     frame.style.opacity = '95%'
     frame.style.boxShadow = '2px 4px 12px black';
-    frame.style.background = '#9a9aeb'
+    frame.style.background = '#1e1f25'
     frame.style.display = 'block'
     frame.style.height = '550px'
     frame.style.transition = 'all 1.3s'
@@ -211,9 +210,12 @@ function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) 
 }
 
 
-//--------------------------PARTE DEL CODIGO DE FOTO RANDOM ---------------------------------//
+//--------------------PARTE DEL CODIGO REFACTORIZADA ---------------------//
 
 /**
+ * 
+FUNCION MODIFICADA PARA QUE APAREZCAN VARIAS IMAGENES DIFERENTES EN LUGAR DE 3 VECES LA MISMA FOTO
+
  function randomPhoto() {
     const framePhoto = document.querySelector('.wrapper-contenido-photo');
     const photo = document.getElementById("contenido-photo");
@@ -266,14 +268,15 @@ function pintarElemento(elemento, contenedorElemento, mostrarTodosLosAtributos) 
     }, 600)
 }
  
-FUNCION MODIFICADA PARA QUE APAREZCAN 4 IMAGENES DIFERENTES EN LUGAR DE 4 VECES LA MISMA FOTO
- */
+*/
+
+//--------------------PARTE DEL CODIGO DE FOTO RANDOM ---------------------//
 
 const framePhoto = document.querySelector('.contenedor');
 const photo = document.getElementById("contenido-photo");
 
 function callingRandomPhotoAPI() {
-    return fetch("https://picsum.photos/250").then(response => {
+    return fetch("https://picsum.photos/150").then(response => {
         if (response.ok) {
             return response.url;
         } else {
@@ -287,30 +290,33 @@ function createdImage(src, alt, clss) {
     img.src = src// asignamos src = url
     img.alt = alt;// nombramos alt="Random photo" 
     img.className = clss;
-    img.style.boxShadow = '2px 4px 12px black';
+    img.style.boxShadow = '2px 4px 12px #6a897b';
+
     return img;
 }
 
 function loadPhoto() {
-    photo.innerHTML = "Cargando imagen..."
-    Promise.all([
-        callingRandomPhotoAPI(),
-        callingRandomPhotoAPI(),
-        callingRandomPhotoAPI(),
-        callingRandomPhotoAPI(),
-        callingRandomPhotoAPI()
-    ])
-        .then((urls) => {
-            photo.innerHTML = "";
-            urls.forEach((url, index, clss) => {
-                const img = createdImage(url, `Radom photo ${index + 1}`, `imgClase${clss = index + 1}`);
-                photo.appendChild(img);
-            });
-        })
-        .catch((error) => {
-            console.log('Error .catch al realizar la solicitud', error);
-            photo.innerHTML = "Error al cargar las imagenes"
-        })
+    photo.style.color = '#fcffd4';
+    photo.innerHTML = "Loading images..."
+    setTimeout(() => {
+        Promise.all([
+            callingRandomPhotoAPI(),
+            callingRandomPhotoAPI(),
+            callingRandomPhotoAPI()
+        ])
+            .then((urls) => {
+                photo.innerHTML = "";
+                urls.forEach((url, index, clss) => {
+                    const img = createdImage(url, `Radom photo ${index + 1}`, `imgClase${clss = index + 1}`);
+                    photo.appendChild(img);
+                });
+            })
+            .catch((error) => {
+                console.log('Error .catch al realizar la solicitud', error);
+                photo.innerHTML = "Error al cargar las imagenes"
+            })
+
+    }, 600)
 
 
 }
@@ -322,28 +328,30 @@ function randomInfo() {
     const frameInfo = document.querySelector('.wrapper-contenido-random')
     const random = document.querySelector('#contenido-random')
 
-    random.innerText = '' // Para vaciar el contenido y vuelva hacer la animacion
-
+    random.innerText = ' Getting random api info...' // Para vaciar el contenido y vuelva hacer la animacion
+    random.style.textAlign = 'center';
+    random.style.color = '#fcffd4'
     // frameInfo.style.background = '#190065'
-    frameInfo.style.boxShadow = "2px 4px 12px black";
+    frameInfo.style.padding = '15px'
+    frameInfo.style.boxShadow = "2px 4px 18px #fcffd4";
     random.style.boxShadow = "2px 4px 12px black";
     random.style.animation = '1.2s linear ddrandomInfo';
     random.style.marginTop = '15px';
-    random.style.height = '150px';
-    random.style.background = '#9a9aeb'
+    random.style.height = '250px';
+    random.style.background = '#1c3f46'
     random.style.borderRadius = '35px 0px 35px 0px';
     random.style.border = '2px solid #0d0d0e';
 
 
     setTimeout(() => {
 
-        random.style.animation = 'none';
+        // random.style.animation = 'none';
         random.innerText = ''; // vaciamos mensaje 'Obteniendo informacion random de los atributos id y title de la API'
         const lengthArray = data.length // variable con valor longitud del array
         const numRandom = sacarCalculoRandom(lengthArray) // variable con valor = metodo para hacer el calculo (longitud array)
         pintarElemento(data[numRandom], random) // llamamos a la funcion pintarElemento(array[resultado tipo number de el calculo numRandom], contenedor a ser pintado)
 
-    }, 1500)
+    }, 2000)
 
 }
 
@@ -351,7 +359,7 @@ function sacarCalculoRandom(max) { // logica numero random
     return Math.floor(Math.random() * max);
 }
 
-//-------------- PARTE DEL CODIGO DEL SELECTOR DE LA API PARA MOSTRAR INFORMACION SELECCIONADA--------------///
+//--- PARTE DEL CODIGO SELECT DE LA API PARA MOSTRAR INFORMACION SELECCIONADA---///
 
 function selector() {
 
@@ -405,26 +413,28 @@ function seleccion(event) {
 
 function pintarSeleccion(elemento, contenedorElemento, opcion) {
     const contenedor = document.getElementById('div-selector')
-    contenedor.style.height = '450px'
+    contenedor.style.overflowY = 'scroll';
     contenedor.style.overflowY = 'scroll';
     console.log(opcion)
-
+    contenedor.style.background = '#1d1f24'
 
     if (opcion === 'userId') {
         crearElemento(elemento, 'p', 'userId', contenedorElemento)
-        contenedor.style.background = '#0ae695'
+        contenedor.style.color = '#aa5399'
     }
     if (opcion === 'id') {
-
         crearElemento(elemento, 'p', 'id', contenedorElemento)
-        contenedor.style.background = '#3d0cd0'
+        contenedor.style.color = '#20b6b0'
     }
     if (opcion === 'body') {
         crearElemento(elemento, 'p', 'body', contenedorElemento)
-        contenedor.style.background = '#0c40d0'
+        contenedor.style.color = '#6f3f6c'
     }
     if (opcion === 'title') {
         crearElemento(elemento, 'p', 'title', contenedorElemento)
-        contenedor.style.background = '#850cd0'
+        contenedor.style.color = '#3f00ff'
     }
 }
+
+
+//-------FIN DEL TRABAJO -------//
